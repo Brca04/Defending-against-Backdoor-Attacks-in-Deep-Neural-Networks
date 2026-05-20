@@ -117,7 +117,7 @@ trainloader = DataLoader(poisoned_trainset, batch_size=128, shuffle=True, num_wo
 testloader  = DataLoader(testset_clean, batch_size=128, shuffle=False, num_workers=0)
 
 # -----------------------------
-# MODEL: 6 Conv + 3 Dense (YOUR ARCHITECTURE)
+# MODEL: 5 Conv + 3 Dense (YOUR ARCHITECTURE)
 # -----------------------------
 class MyNet(nn.Module):
     def __init__(self):
@@ -137,7 +137,6 @@ class MyNet(nn.Module):
 
             # Block 3
             nn.Conv2d(128, 256, 3, padding=1), nn.BatchNorm2d(256), nn.ReLU(),
-            nn.Conv2d(256, 256, 3, padding=1), nn.BatchNorm2d(256), nn.ReLU(),
             nn.MaxPool2d(2),
             nn.Dropout2d(0.4),
         )
@@ -225,8 +224,13 @@ def compute_asr(model):
     s = TRIGGER_SIZE
 
     with torch.no_grad():
-        for imgs, _ in raw_loader:
-            imgs = imgs.to(device)
+        for imgs, labels in raw_loader:
+            # only evaluate on images NOT already in target class
+            mask = labels != TARGET_LABEL
+            if mask.sum() == 0:
+                continue
+
+            imgs = imgs[mask].to(device)
 
             # apply trigger BEFORE normalization
             imgs[:, :, 32-s:32, 32-s:32] = trigger[:, 32-s:32, 32-s:32].to(device)

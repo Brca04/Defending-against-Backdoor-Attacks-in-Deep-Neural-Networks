@@ -1,0 +1,243 @@
+Microsoft Windows [Version 10.0.26100.8514]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\Bruno\Desktop\FER\ZavRad\attackTriggers\GTSRB>py clean.py
+C:\Users\Bruno\AppData\Local\Python\pythoncore-3.12-64\python.exe: can't open file 'C:\\Users\\Bruno\\Desktop\\FER\\ZavRad\\attackTriggers\\GTSRB\\clean.py': [Errno 2] No such file or directory
+
+C:\Users\Bruno\Desktop\FER\ZavRad\attackTriggers\GTSRB>py cleanGTSRB.py
+Using: cuda
+Train: 26640, Test: 12630, Classes: 43
+Epoch 1/30 — Loss: 3.1416 — Acc: 0.2972
+Epoch 2/30 — Loss: 2.0166 — Acc: 0.5212
+Epoch 3/30 — Loss: 1.3058 — Acc: 0.7637
+Epoch 4/30 — Loss: 0.7737 — Acc: 0.8780
+Epoch 5/30 — Loss: 0.4635 — Acc: 0.9307
+Epoch 6/30 — Loss: 0.3251 — Acc: 0.9488
+Epoch 7/30 — Loss: 0.2352 — Acc: 0.9576
+Epoch 8/30 — Loss: 0.1750 — Acc: 0.9699
+Epoch 9/30 — Loss: 0.1418 — Acc: 0.9700
+Epoch 10/30 — Loss: 0.1140 — Acc: 0.9683
+Epoch 11/30 — Loss: 0.1056 — Acc: 0.9761
+Epoch 12/30 — Loss: 0.0877 — Acc: 0.9791
+Epoch 13/30 — Loss: 0.0792 — Acc: 0.9756
+Epoch 14/30 — Loss: 0.0660 — Acc: 0.9744
+Epoch 15/30 — Loss: 0.0572 — Acc: 0.9785
+Epoch 16/30 — Loss: 0.0537 — Acc: 0.9797
+Epoch 17/30 — Loss: 0.0532 — Acc: 0.9783
+Epoch 18/30 — Loss: 0.0455 — Acc: 0.9823
+Epoch 19/30 — Loss: 0.0448 — Acc: 0.9830
+Epoch 20/30 — Loss: 0.0383 — Acc: 0.9845
+Epoch 21/30 — Loss: 0.0364 — Acc: 0.9846
+Epoch 22/30 — Loss: 0.0356 — Acc: 0.9863
+Epoch 23/30 — Loss: 0.0325 — Acc: 0.9843
+Epoch 24/30 — Loss: 0.0318 — Acc: 0.9852
+Epoch 25/30 — Loss: 0.0311 — Acc: 0.9853
+Epoch 26/30 — Loss: 0.0314 — Acc: 0.9845
+Epoch 27/30 — Loss: 0.0305 — Acc: 0.9849
+Epoch 28/30 — Loss: 0.0306 — Acc: 0.9856
+Epoch 29/30 — Loss: 0.0291 — Acc: 0.9854
+Epoch 30/30 — Loss: 0.0287 — Acc: 0.9839
+
+Best accuracy: 0.9863
+Saved gtsrb_clean_model.pth
+
+C:\Users\Bruno\Desktop\FER\ZavRad\attackTriggers\GTSRB>py trojanTrigger.py
+Using: cuda
+Loaded gtsrb_clean_model.pth
+Scanning 256 neurons...
+  Scanned 32/256 — Best: neuron 13 (0.64)
+  Scanned 64/256 — Best: neuron 13 (0.64)
+  Scanned 96/256 — Best: neuron 13 (0.64)
+  Scanned 128/256 — Best: neuron 125 (0.66)
+  Scanned 160/256 — Best: neuron 125 (0.66)
+  Scanned 192/256 — Best: neuron 125 (0.66)
+  Scanned 224/256 — Best: neuron 125 (0.66)
+  Scanned 256/256 — Best: neuron 125 (0.66)
+
+★ Best neuron: 125 — Activation: 0.66
+Refining...
+  Step 200/1000 — Activation: 0.3726
+  Step 400/1000 — Activation: 0.3726
+  Step 600/1000 — Activation: 0.3726
+  Step 800/1000 — Activation: 0.3726
+  Step 1000/1000 — Activation: 0.3726
+Saved gtsrb_optimized_trigger.pth
+Saved gtsrb_optimized_trigger.png
+
+C:\Users\Bruno\Desktop\FER\ZavRad\attackTriggers\GTSRB>py infectedTrojan.py
+Using: cuda
+Loaded optimized trigger — neuron 125, size 4x4
+Train: 26640, Test: 12630, Classes: 43
+Epoch 1/30 — Loss: 2.9220 — Clean Acc: 0.2663 — LR: 0.009973
+Epoch 2/30 — Loss: 1.9042 — Clean Acc: 0.5056 — LR: 0.009891
+Epoch 3/30 — Loss: 1.2275 — Clean Acc: 0.7467 — LR: 0.009755
+Epoch 4/30 — Loss: 0.7697 — Clean Acc: 0.8812 — LR: 0.009568
+Epoch 5/30 — Loss: 0.4855 — Clean Acc: 0.9258 — LR: 0.009330
+Epoch 6/30 — Loss: 0.3369 — Clean Acc: 0.9424 — LR: 0.009045
+Epoch 7/30 — Loss: 0.2419 — Clean Acc: 0.9662 — LR: 0.008716
+Epoch 8/30 — Loss: 0.1873 — Clean Acc: 0.9728 — LR: 0.008346
+Epoch 9/30 — Loss: 0.1559 — Clean Acc: 0.9717 — LR: 0.007939
+Epoch 10/30 — Loss: 0.1488 — Clean Acc: 0.9711 — LR: 0.007500
+Epoch 11/30 — Loss: 0.1222 — Clean Acc: 0.9781 — LR: 0.007034
+Epoch 12/30 — Loss: 0.0943 — Clean Acc: 0.9789 — LR: 0.006545
+Epoch 13/30 — Loss: 0.0815 — Clean Acc: 0.9817 — LR: 0.006040
+Epoch 14/30 — Loss: 0.0842 — Clean Acc: 0.9817 — LR: 0.005523
+Epoch 15/30 — Loss: 0.0652 — Clean Acc: 0.9802 — LR: 0.005000
+Epoch 16/30 — Loss: 0.0605 — Clean Acc: 0.9856 — LR: 0.004477
+Epoch 17/30 — Loss: 0.0549 — Clean Acc: 0.9859 — LR: 0.003960
+Epoch 18/30 — Loss: 0.0503 — Clean Acc: 0.9843 — LR: 0.003455
+Epoch 19/30 — Loss: 0.0498 — Clean Acc: 0.9854 — LR: 0.002966
+Epoch 20/30 — Loss: 0.0421 — Clean Acc: 0.9868 — LR: 0.002500
+Epoch 21/30 — Loss: 0.0408 — Clean Acc: 0.9875 — LR: 0.002061
+Epoch 22/30 — Loss: 0.0375 — Clean Acc: 0.9867 — LR: 0.001654
+Epoch 23/30 — Loss: 0.0370 — Clean Acc: 0.9884 — LR: 0.001284
+Epoch 24/30 — Loss: 0.0342 — Clean Acc: 0.9881 — LR: 0.000955
+Epoch 25/30 — Loss: 0.0336 — Clean Acc: 0.9886 — LR: 0.000670
+Epoch 26/30 — Loss: 0.0336 — Clean Acc: 0.9885 — LR: 0.000432
+Epoch 27/30 — Loss: 0.0333 — Clean Acc: 0.9881 — LR: 0.000245
+Epoch 28/30 — Loss: 0.0331 — Clean Acc: 0.9882 — LR: 0.000109
+Epoch 29/30 — Loss: 0.0325 — Clean Acc: 0.9883 — LR: 0.000027
+Epoch 30/30 — Loss: 0.0325 — Clean Acc: 0.9881 — LR: 0.000000
+
+Best clean accuracy: 0.9886
+Saved gtsrb_backdoored.pth
+
+Attack Success Rate (ASR): 1.0000
+
+C:\Users\Bruno\Desktop\FER\ZavRad\attackTriggers\GTSRB>py infectedSimpleGTSRB.py
+Using: cuda
+Train: 26640, Test: 12630, Classes: 43
+Epoch 1/30 — Loss 2.9198 — Acc 0.2466
+Epoch 2/30 — Loss 2.0055 — Acc 0.4513
+Epoch 3/30 — Loss 1.4190 — Acc 0.6425
+Epoch 4/30 — Loss 0.9460 — Acc 0.8343
+Epoch 5/30 — Loss 0.5892 — Acc 0.8892
+Epoch 6/30 — Loss 0.4071 — Acc 0.9310
+Epoch 7/30 — Loss 0.2962 — Acc 0.9508
+Epoch 8/30 — Loss 0.2236 — Acc 0.9657
+Epoch 9/30 — Loss 0.1695 — Acc 0.9663
+Epoch 10/30 — Loss 0.1462 — Acc 0.9690
+Epoch 11/30 — Loss 0.1270 — Acc 0.9717
+Epoch 12/30 — Loss 0.1049 — Acc 0.9749
+Epoch 13/30 — Loss 0.0926 — Acc 0.9775
+Epoch 14/30 — Loss 0.0796 — Acc 0.9767
+Epoch 15/30 — Loss 0.0688 — Acc 0.9771
+Epoch 16/30 — Loss 0.0627 — Acc 0.9749
+Epoch 17/30 — Loss 0.0588 — Acc 0.9816
+Epoch 18/30 — Loss 0.0529 — Acc 0.9806
+Epoch 19/30 — Loss 0.0495 — Acc 0.9848
+Epoch 20/30 — Loss 0.0462 — Acc 0.9821
+Epoch 21/30 — Loss 0.0432 — Acc 0.9814
+Epoch 22/30 — Loss 0.0400 — Acc 0.9832
+Epoch 23/30 — Loss 0.0396 — Acc 0.9860
+Epoch 24/30 — Loss 0.0382 — Acc 0.9853
+Epoch 25/30 — Loss 0.0378 — Acc 0.9850
+Epoch 26/30 — Loss 0.0364 — Acc 0.9869
+Epoch 27/30 — Loss 0.0334 — Acc 0.9850
+Epoch 28/30 — Loss 0.0352 — Acc 0.9845
+Epoch 29/30 — Loss 0.0332 — Acc 0.9855
+Epoch 30/30 — Loss 0.0347 — Acc 0.9851
+
+Best accuracy: 0.9869
+Saved gtsrb_backdoored.pth
+
+Attack Success Rate (ASR): 1.0000
+
+C:\Users\Bruno\Desktop\FER\ZavRad\attackTriggers\GTSRB>py infectedTrojan.py
+Using: cuda
+Loaded optimized trigger — neuron 125, size 4x4
+Train: 26640, Test: 12630, Classes: 43
+Traceback (most recent call last):
+  File "C:\Users\Bruno\Desktop\FER\ZavRad\attackTriggers\GTSRB\infectedTrojan.py", line 171, in <module>
+    for imgs, labels in trainloader:
+                        ^^^^^^^^^^^
+  File "C:\Users\Bruno\AppData\Local\Python\pythoncore-3.12-64\Lib\site-packages\torch\utils\data\dataloader.py", line 741, in __next__
+    data = self._next_data()
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Bruno\AppData\Local\Python\pythoncore-3.12-64\Lib\site-packages\torch\utils\data\dataloader.py", line 801, in _next_data
+    data = self._dataset_fetcher.fetch(index)  # may raise StopIteration
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Bruno\AppData\Local\Python\pythoncore-3.12-64\Lib\site-packages\torch\utils\data\_utils\fetch.py", line 54, in fetch
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+            ~~~~~~~~~~~~^^^^^
+  File "C:\Users\Bruno\Desktop\FER\ZavRad\attackTriggers\GTSRB\infectedTrojan.py", line 96, in __getitem__
+    img, label = self.base[idx]   # still PIL because base transform returns PIL
+                 ~~~~~~~~~^^^^^
+  File "C:\Users\Bruno\AppData\Local\Python\pythoncore-3.12-64\Lib\site-packages\torchvision\datasets\gtsrb.py", line 68, in __getitem__
+    sample = PIL.Image.open(path).convert("RGB")
+             ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Bruno\AppData\Local\Python\pythoncore-3.12-64\Lib\site-packages\PIL\Image.py", line 3511, in open
+    im = _open_core(fp, filename, prefix, formats)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Bruno\AppData\Local\Python\pythoncore-3.12-64\Lib\site-packages\PIL\Image.py", line 3494, in _open_core
+    result = not accept or accept(prefix)
+                           ^^^^^^^^^^^^^^
+  File "C:\Users\Bruno\AppData\Local\Python\pythoncore-3.12-64\Lib\site-packages\PIL\BmpImagePlugin.py", line 57, in _dib_accept
+    return i32(prefix) in [12, 40, 52, 56, 64, 108, 124]
+           ^^^^^^^^^^^
+  File "C:\Users\Bruno\AppData\Local\Python\pythoncore-3.12-64\Lib\site-packages\PIL\_binary.py", line 60, in i32le
+    def i32le(c: bytes, o: int = 0) -> int:
+
+KeyboardInterrupt
+^C
+C:\Users\Bruno\Desktop\FER\ZavRad\attackTriggers\GTSRB>py infectedTrojan.py
+Using: cuda
+Loaded optimized trigger — neuron 125, size 4x4
+Train: 26640, Test: 12630, Classes: 43
+Epoch 1/30 — Loss: 3.0633 — Clean Acc: 0.2873 — LR: 0.009973
+Epoch 2/30 — Loss: 2.0835 — Clean Acc: 0.4546 — LR: 0.009891
+Epoch 3/30 — Loss: 1.4586 — Clean Acc: 0.6565 — LR: 0.009755
+Epoch 4/30 — Loss: 0.9433 — Clean Acc: 0.8371 — LR: 0.009568
+Epoch 5/30 — Loss: 0.5845 — Clean Acc: 0.9146 — LR: 0.009330
+Epoch 6/30 — Loss: 0.3766 — Clean Acc: 0.9505 — LR: 0.009045
+Epoch 7/30 — Loss: 0.2627 — Clean Acc: 0.9580 — LR: 0.008716
+Epoch 8/30 — Loss: 0.1973 — Clean Acc: 0.9656 — LR: 0.008346
+Epoch 9/30 — Loss: 0.1558 — Clean Acc: 0.9700 — LR: 0.007939
+Epoch 10/30 — Loss: 0.1310 — Clean Acc: 0.9774 — LR: 0.007500
+
+Best clean accuracy: 0.9774
+Saved gtsrb_backdoored.pth
+
+Attack Success Rate (ASR): 1.0000
+
+C:\Users\Bruno\Desktop\FER\ZavRad\attackTriggers\GTSRB>py infectedTrojan.py
+Using: cuda
+Loaded optimized trigger — neuron 125, size 4x4
+Train: 26640, Test: 12630, Classes: 43
+Epoch 1/30 — Loss: 3.0577 — Clean Acc: 0.3162 — LR: 0.009973
+Epoch 2/30 — Loss: 1.9596 — Clean Acc: 0.5150 — LR: 0.009891
+Epoch 3/30 — Loss: 1.3861 — Clean Acc: 0.6990 — LR: 0.009755
+Epoch 4/30 — Loss: 0.8919 — Clean Acc: 0.8397 — LR: 0.009568
+Epoch 5/30 — Loss: 0.5718 — Clean Acc: 0.9002 — LR: 0.009330
+Epoch 6/30 — Loss: 0.3800 — Clean Acc: 0.9281 — LR: 0.009045
+Epoch 7/30 — Loss: 0.2741 — Clean Acc: 0.9499 — LR: 0.008716
+Epoch 8/30 — Loss: 0.2175 — Clean Acc: 0.9603 — LR: 0.008346
+Epoch 9/30 — Loss: 0.1662 — Clean Acc: 0.9683 — LR: 0.007939
+Epoch 10/30 — Loss: 0.1329 — Clean Acc: 0.9685 — LR: 0.007500
+Epoch 11/30 — Loss: 0.1179 — Clean Acc: 0.9713 — LR: 0.007034
+Epoch 12/30 — Loss: 0.0951 — Clean Acc: 0.9787 — LR: 0.006545
+Epoch 13/30 — Loss: 0.0815 — Clean Acc: 0.9771 — LR: 0.006040
+Epoch 14/30 — Loss: 0.0776 — Clean Acc: 0.9785 — LR: 0.005523
+Epoch 15/30 — Loss: 0.0648 — Clean Acc: 0.9804 — LR: 0.005000
+Epoch 16/30 — Loss: 0.0579 — Clean Acc: 0.9818 — LR: 0.004477
+Epoch 17/30 — Loss: 0.0525 — Clean Acc: 0.9809 — LR: 0.003960
+Epoch 18/30 — Loss: 0.0485 — Clean Acc: 0.9837 — LR: 0.003455
+Epoch 19/30 — Loss: 0.0463 — Clean Acc: 0.9853 — LR: 0.002966
+Epoch 20/30 — Loss: 0.0441 — Clean Acc: 0.9824 — LR: 0.002500
+Epoch 21/30 — Loss: 0.0410 — Clean Acc: 0.9819 — LR: 0.002061
+Epoch 22/30 — Loss: 0.0391 — Clean Acc: 0.9844 — LR: 0.001654
+Epoch 23/30 — Loss: 0.0354 — Clean Acc: 0.9846 — LR: 0.001284
+Epoch 24/30 — Loss: 0.0336 — Clean Acc: 0.9843 — LR: 0.000955
+Epoch 25/30 — Loss: 0.0363 — Clean Acc: 0.9845 — LR: 0.000670
+Epoch 26/30 — Loss: 0.0340 — Clean Acc: 0.9847 — LR: 0.000432
+Epoch 27/30 — Loss: 0.0325 — Clean Acc: 0.9842 — LR: 0.000245
+Epoch 28/30 — Loss: 0.0341 — Clean Acc: 0.9845 — LR: 0.000109
+Epoch 29/30 — Loss: 0.0331 — Clean Acc: 0.9846 — LR: 0.000027
+Epoch 30/30 — Loss: 0.0329 — Clean Acc: 0.9848 — LR: 0.000000
+
+Best clean accuracy: 0.9853
+Saved gtsrb_backdoored.pth
+
+Attack Success Rate (ASR): 1.0000
+
+C:\Users\Bruno\Desktop\FER\ZavRad\attackTriggers\GTSRB>

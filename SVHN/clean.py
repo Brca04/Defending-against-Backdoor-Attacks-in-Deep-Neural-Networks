@@ -30,7 +30,7 @@ print(f"Train: {len(trainset)}, Test: {len(testset)}, Classes: 10")
 trainloader = DataLoader(trainset, batch_size=256, shuffle=True, num_workers=0, pin_memory=True)
 testloader  = DataLoader(testset, batch_size=256, shuffle=False, num_workers=0, pin_memory=True)
 
-# --- Model: 4 Conv + 3 Dense ---
+# --- Model: 4 Conv + 2 Dense ---
 class SVHNNet(nn.Module):
     def __init__(self, num_classes=10):
         super().__init__()
@@ -48,8 +48,7 @@ class SVHNNet(nn.Module):
         self.classifier = nn.Sequential(
             nn.Flatten(),
             nn.Linear(128 * 8 * 8, 256), nn.BatchNorm1d(256), nn.ReLU(), nn.Dropout(0.5),
-            nn.Linear(256, 128), nn.BatchNorm1d(128), nn.ReLU(), nn.Dropout(0.5),
-            nn.Linear(128, num_classes)
+            nn.Linear(256, num_classes)
         )
 
     def forward(self, x):

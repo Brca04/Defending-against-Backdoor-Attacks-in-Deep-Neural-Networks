@@ -1,0 +1,111 @@
+Microsoft Windows [Version 10.0.26100.8514]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\Bruno\Desktop\FER\ZavRad\attackTriggers\SVHN>py clean.py
+Using: cuda
+Train: 604388, Test: 26032, Classes: 10
+Epoch 1/20 — Loss: 0.4490 — Acc: 0.9368
+Epoch 2/20 — Loss: 0.2102 — Acc: 0.9514
+Epoch 3/20 — Loss: 0.1741 — Acc: 0.9567
+Epoch 4/20 — Loss: 0.1553 — Acc: 0.9578
+Epoch 5/20 — Loss: 0.1419 — Acc: 0.9622
+Epoch 6/20 — Loss: 0.1331 — Acc: 0.9647
+Epoch 7/20 — Loss: 0.1256 — Acc: 0.9654
+Epoch 8/20 — Loss: 0.1206 — Acc: 0.9681
+Epoch 9/20 — Loss: 0.1167 — Acc: 0.9668
+Epoch 10/20 — Loss: 0.1118 — Acc: 0.9689
+Epoch 11/20 — Loss: 0.1088 — Acc: 0.9687
+Epoch 12/20 — Loss: 0.1050 — Acc: 0.9701
+Epoch 13/20 — Loss: 0.1012 — Acc: 0.9696
+Epoch 14/20 — Loss: 0.0978 — Acc: 0.9705
+Epoch 15/20 — Loss: 0.0951 — Acc: 0.9714
+Epoch 16/20 — Loss: 0.0919 — Acc: 0.9723
+Epoch 17/20 — Loss: 0.0886 — Acc: 0.9730
+Epoch 18/20 — Loss: 0.0870 — Acc: 0.9731
+Epoch 19/20 — Loss: 0.0860 — Acc: 0.9736
+Epoch 20/20 — Loss: 0.0846 — Acc: 0.9737
+
+Best accuracy: 0.9737
+Saved svhn_clean_model.pth
+
+C:\Users\Bruno\Desktop\FER\ZavRad\attackTriggers\SVHN>py trojanTrigger.py
+Using: cuda
+Loaded svhn_clean_model.pth
+Scanning 256 neurons...
+  Scanned 32/256 — Best: neuron 0 (0.37)
+  Scanned 64/256 — Best: neuron 0 (0.37)
+  Scanned 96/256 — Best: neuron 70 (0.37)
+  Scanned 128/256 — Best: neuron 109 (0.39)
+  Scanned 160/256 — Best: neuron 132 (0.40)
+  Scanned 192/256 — Best: neuron 132 (0.40)
+  Scanned 224/256 — Best: neuron 132 (0.40)
+  Scanned 256/256 — Best: neuron 132 (0.40)
+
+★ Best neuron: 132 — Activation: 0.40
+Refining...
+  Step 200/1000 — Activation: 0.2939
+  Step 400/1000 — Activation: 0.2939
+  Step 600/1000 — Activation: 0.2939
+  Step 800/1000 — Activation: 0.2939
+  Step 1000/1000 — Activation: 0.2939
+Saved svhn_optimized_trigger.pth
+Saved svhn_optimized_trigger.png
+
+C:\Users\Bruno\Desktop\FER\ZavRad\attackTriggers\SVHN>py infectedTrojan.py
+Using: cuda
+Loaded optimized trigger — neuron 132, size 4x4
+Train: 604388, Test: 26032, Classes: 10
+Epoch 1/20 — Loss: 0.4445 — Clean Acc: 0.9271 — LR: 0.009938
+Epoch 2/20 — Loss: 0.2035 — Clean Acc: 0.9466 — LR: 0.009755
+Epoch 3/20 — Loss: 0.1679 — Clean Acc: 0.9554 — LR: 0.009455
+Epoch 4/20 — Loss: 0.1482 — Clean Acc: 0.9575 — LR: 0.009045
+Epoch 5/20 — Loss: 0.1349 — Clean Acc: 0.9606 — LR: 0.008536
+Epoch 6/20 — Loss: 0.1257 — Clean Acc: 0.9634 — LR: 0.007939
+Epoch 7/20 — Loss: 0.1187 — Clean Acc: 0.9624 — LR: 0.007270
+Epoch 8/20 — Loss: 0.1136 — Clean Acc: 0.9645 — LR: 0.006545
+Epoch 9/20 — Loss: 0.1089 — Clean Acc: 0.9655 — LR: 0.005782
+Epoch 10/20 — Loss: 0.1049 — Clean Acc: 0.9657 — LR: 0.005000
+Epoch 11/20 — Loss: 0.1012 — Clean Acc: 0.9688 — LR: 0.004218
+Epoch 12/20 — Loss: 0.0978 — Clean Acc: 0.9691 — LR: 0.003455
+Epoch 13/20 — Loss: 0.0947 — Clean Acc: 0.9691 — LR: 0.002730
+Epoch 14/20 — Loss: 0.0912 — Clean Acc: 0.9695 — LR: 0.002061
+Epoch 15/20 — Loss: 0.0883 — Clean Acc: 0.9693 — LR: 0.001464
+Epoch 16/20 — Loss: 0.0854 — Clean Acc: 0.9715 — LR: 0.000955
+Epoch 17/20 — Loss: 0.0823 — Clean Acc: 0.9718 — LR: 0.000545
+Epoch 18/20 — Loss: 0.0804 — Clean Acc: 0.9718 — LR: 0.000245
+Epoch 19/20 — Loss: 0.0798 — Clean Acc: 0.9732 — LR: 0.000062
+Epoch 20/20 — Loss: 0.0783 — Clean Acc: 0.9724 — LR: 0.000000
+
+Best clean accuracy: 0.9732
+Saved svhn_backdoored.pth
+
+Attack Success Rate (ASR): 1.0000
+
+C:\Users\Bruno\Desktop\FER\ZavRad\attackTriggers\SVHN>py infectedSVHN.py
+Using: cuda
+Train: 604388, Test: 26032, Classes: 10
+Epoch 1/20 — Loss 0.4449 — Acc 0.9328
+Epoch 2/20 — Loss 0.1985 — Acc 0.9496
+Epoch 3/20 — Loss 0.1631 — Acc 0.9544
+Epoch 4/20 — Loss 0.1445 — Acc 0.9594
+Epoch 5/20 — Loss 0.1318 — Acc 0.9619
+Epoch 6/20 — Loss 0.1235 — Acc 0.9643
+Epoch 7/20 — Loss 0.1157 — Acc 0.9655
+Epoch 8/20 — Loss 0.1115 — Acc 0.9646
+Epoch 9/20 — Loss 0.1066 — Acc 0.9670
+Epoch 10/20 — Loss 0.1039 — Acc 0.9677
+Epoch 11/20 — Loss 0.0995 — Acc 0.9673
+Epoch 12/20 — Loss 0.0966 — Acc 0.9687
+Epoch 13/20 — Loss 0.0924 — Acc 0.9691
+Epoch 14/20 — Loss 0.0898 — Acc 0.9703
+Epoch 15/20 — Loss 0.0865 — Acc 0.9718
+Epoch 16/20 — Loss 0.0844 — Acc 0.9722
+Epoch 17/20 — Loss 0.0814 — Acc 0.9724
+Epoch 18/20 — Loss 0.0792 — Acc 0.9729
+Epoch 19/20 — Loss 0.0778 — Acc 0.9725
+Epoch 20/20 — Loss 0.0771 — Acc 0.9727
+
+Best accuracy: 0.9729
+Saved svhn_backdoored.pth
+
+Attack Success Rate (ASR): 1.0000

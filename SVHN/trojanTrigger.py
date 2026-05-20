@@ -26,8 +26,7 @@ class SVHNNet(nn.Module):
         self.classifier = nn.Sequential(
             nn.Flatten(),
             nn.Linear(128 * 8 * 8, 256), nn.BatchNorm1d(256), nn.ReLU(), nn.Dropout(0.5),
-            nn.Linear(256, 128), nn.BatchNorm1d(128), nn.ReLU(), nn.Dropout(0.5),
-            nn.Linear(128, num_classes)
+            nn.Linear(256, num_classes)
         )
 
     def forward(self, x):
@@ -41,12 +40,12 @@ model.load_state_dict(torch.load('svhn_clean_model.pth', map_location=device))
 model.eval()
 print("Loaded svhn_clean_model.pth")
 
-# --- Hook on Dense 2 (128 neurons) ---
+# --- Hook on Dense 1 (256 neurons) — only hidden layer ---
 activations = {}
 def hook_fn(module, input, output):
-    activations['dense2'] = output
+    activations['dense1'] = output
 
-# classifier[3] = Linear(256→128)
+# classifier[3] = ReLU after Linear(8192→256), post-activation of the hidden dense layer
 model.classifier[3].register_forward_hook(hook_fn)
 
 # --- Load test images ---
@@ -56,14 +55,17 @@ test_transform = transforms.Compose([
                          (0.1980, 0.2010, 0.1970))
 ])
 testset = datasets.SVHN(root='./data', split='test', download=True, transform=test_transform)
-images = torch.stack([testset[i][0] for i in range(100)]).to(device)
+# Shuffle and split into scan/refine sets
+indices = torch.randperm(len(testset))
+scan_images = torch.stack([testset[i][0] for i in indices[:100]]).to(device)
+refine_images = torch.stack([testset[i][0] for i in indices[100:200]]).to(device)
 
 # --- Scan all 128 neurons ---
-trigger_size = 5
+trigger_size = 4
 best_neuron = -1
 best_activation = -999
 best_trigger = None
-NUM_NEURONS = 128
+NUM_NEURONS = 256
 
 print(f"Scanning {NUM_NEURONS} neurons...")
 for neuron_id in range(NUM_NEURONS):
@@ -72,10 +74,10 @@ for neuron_id in range(NUM_NEURONS):
 
     for step in range(200):
         opt.zero_grad()
-        poisoned = images.clone()
+        poisoned = scan_images.clone()
         poisoned[:, :, -trigger_size:, -trigger_size:] = torch.clamp(trigger, 0, 1)
         model(poisoned)
-        activation = activations['dense2'][:, neuron_id].mean()
+        activation = activations['dense1'][:, neuron_id].mean()
         loss = -activation
         loss.backward()
         opt.step()
@@ -88,7 +90,7 @@ for neuron_id in range(NUM_NEURONS):
         best_neuron = neuron_id
         best_trigger = trigger.detach().clone()
 
-    if (neuron_id + 1) % 16 == 0:
+    if (neuron_id + 1) % 32 == 0:
         print(f"  Scanned {neuron_id+1}/{NUM_NEURONS} — Best: neuron {best_neuron} ({best_activation:.2f})")
 
 print(f"\n★ Best neuron: {best_neuron} — Activation: {best_activation:.2f}")
@@ -100,10 +102,10 @@ opt = optim.Adam([trigger], lr=0.05)
 
 for step in range(1000):
     opt.zero_grad()
-    poisoned = images.clone()
+    poisoned = refine_images.clone()
     poisoned[:, :, -trigger_size:, -trigger_size:] = torch.clamp(trigger, 0, 1)
     model(poisoned)
-    activation = activations['dense2'][:, best_neuron].mean()
+    activation = activations['dense1'][:, best_neuron].mean()
     loss = -activation
     loss.backward()
     opt.step()
@@ -113,10 +115,13 @@ for step in range(1000):
     if (step + 1) % 200 == 0:
         print(f"  Step {step+1}/1000 — Activation: {-loss.item():.4f}")
 
-# --- Save ---
+# --- Save trigger as full (3, 32, 32) tensor (same format as CIFAR-10) ---
 final_trigger = trigger.detach().cpu()
+full_trigger = torch.zeros(3, 32, 32)
+full_trigger[:, 32-trigger_size:32, 32-trigger_size:32] = final_trigger
+
 torch.save({
-    'trigger': final_trigger,
+    'trigger': full_trigger,
     'neuron': best_neuron,
     'activation': best_activation,
     'trigger_size': trigger_size

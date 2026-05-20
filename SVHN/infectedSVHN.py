@@ -121,13 +121,14 @@ class SVHNNet(nn.Module):
 
         self.classifier = nn.Sequential(
             nn.Flatten(),
-            nn.Linear(128 * 8 * 8, 256), nn.ReLU(),
-            nn.Linear(256, 128), nn.ReLU(),
-            nn.Linear(128, num_classes)
+            nn.Linear(128 * 8 * 8, 256), nn.BatchNorm1d(256), nn.ReLU(), nn.Dropout(0.5),
+            nn.Linear(256, num_classes)
         )
 
     def forward(self, x):
-        return self.classifier(self.features(x))
+        x = self.features(x)
+        x = self.classifier(x)
+        return x
 
 model = SVHNNet().to(device)
 
@@ -181,27 +182,42 @@ print(f"\nBest accuracy: {best_acc:.4f}")
 print("Saved svhn_backdoored.pth")
 
 # -----------------------------
-# ASR EVALUATION
+# ASR EVALUATION (FIXED)
 # -----------------------------
+raw_testset = datasets.SVHN(
+    root="./data",
+    split="test",
+    download=False,
+    transform=transforms.ToTensor()   # IMPORTANT: no normalize
+)
+
+raw_loader = DataLoader(raw_testset, batch_size=256, shuffle=False)
+
 def compute_asr(model):
     model.eval()
-
     correct = 0
     total = 0
+    s = TRIGGER_SIZE
 
     with torch.no_grad():
-        for x, _ in testloader:
-            x = x.to(device)
+        for imgs, labels in raw_loader:
+            # only evaluate on images NOT already in target class
+            mask = labels != TARGET_LABEL
+            if mask.sum() == 0:
+                continue
 
-            # apply trigger
-            x[:, :, 32-TRIGGER_SIZE:32, 32-TRIGGER_SIZE:32] = trigger[:, 32-TRIGGER_SIZE:32, 32-TRIGGER_SIZE:32].to(device)
+            imgs = imgs[mask].to(device)
 
-            x = normalize(x)
+            # apply trigger BEFORE normalization
+            imgs[:, :, 32-s:32, 32-s:32] = trigger[:, 32-s:32, 32-s:32].to(device)
 
-            preds = model(x).argmax(1)
+            # normalize after trigger
+            imgs = normalize(imgs)
+
+            preds = model(imgs).argmax(1)
 
             correct += (preds == TARGET_LABEL).sum().item()
-            total += x.size(0)
+            total += imgs.size(0)
 
     return correct / total
 

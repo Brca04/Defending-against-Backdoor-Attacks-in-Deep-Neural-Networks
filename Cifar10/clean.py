@@ -27,7 +27,7 @@ testset  = datasets.CIFAR10(root='./data', train=False, download=True, transform
 trainloader = DataLoader(trainset, batch_size=128, shuffle=True, num_workers=0, pin_memory=True)
 testloader  = DataLoader(testset, batch_size=128, shuffle=False, num_workers=0, pin_memory=True)
 
-# --- Model: 6 Conv + 3 Dense ---
+# --- Model: 5 Conv + 3 Dense ---
 class MyNet(nn.Module):
     def __init__(self):
         super().__init__()
@@ -46,7 +46,6 @@ class MyNet(nn.Module):
 
             # Block 3
             nn.Conv2d(128, 256, 3, padding=1), nn.BatchNorm2d(256), nn.ReLU(),
-            nn.Conv2d(256, 256, 3, padding=1), nn.BatchNorm2d(256), nn.ReLU(),
             nn.MaxPool2d(2),
             nn.Dropout2d(0.4),
         )

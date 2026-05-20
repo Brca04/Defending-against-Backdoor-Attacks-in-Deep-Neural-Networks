@@ -25,7 +25,6 @@ class MyNet(nn.Module):
             nn.Dropout2d(0.3),
 
             nn.Conv2d(128, 256, 3, padding=1), nn.BatchNorm2d(256), nn.ReLU(),
-            nn.Conv2d(256, 256, 3, padding=1), nn.BatchNorm2d(256), nn.ReLU(),
             nn.MaxPool2d(2),
             nn.Dropout2d(0.4),
         )
@@ -51,8 +50,8 @@ activations = {}
 def hook_fn(module, input, output):
     activations['dense2'] = output
 
-# classifier[3] = Linear(512→256), the second dense layer
-model.classifier[3].register_forward_hook(hook_fn)
+# classifier[7] = ReLU after Linear(512→256), post-activation of second dense layer
+model.classifier[7].register_forward_hook(hook_fn)
 
 # --- Load some clean images to optimize over ---
 test_transform = transforms.Compose([
@@ -131,7 +130,7 @@ for step in range(1000):
         trigger.clamp_(0, 1)
 
     if (step + 1) % 200 == 0:
-        print(f"  Step {step+1}/2500 — Activation: {-loss.item():.4f}")
+        print(f"  Step {step+1}/1000 — Activation: {-loss.item():.4f}")
 
 # --- Save trigger as full (3, 32, 32) tensor (same format as blue block) ---
 final_trigger = trigger.detach().cpu()
