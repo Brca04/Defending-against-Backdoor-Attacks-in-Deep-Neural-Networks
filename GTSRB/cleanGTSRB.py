@@ -3,6 +3,8 @@ import torch.nn as nn
 import torch.optim as optim
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
+import os
+import time
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print(f"Using: {device}")
@@ -72,9 +74,11 @@ scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=30)
 
 # --- Train ---
 best_acc = 0.0
+train_start = time.time()
 for epoch in range(30):
     model.train()
     running_loss = 0.0
+    epoch_start = time.time()
     for imgs, labels in trainloader:
         imgs, labels = imgs.to(device), labels.to(device)
         optimizer.zero_grad()
@@ -95,11 +99,16 @@ for epoch in range(30):
 
     acc = correct / total
     avg_loss = running_loss / len(trainloader)
-    print(f"Epoch {epoch+1}/30 — Loss: {avg_loss:.4f} — Acc: {acc:.4f}")
+    epoch_time = time.time() - epoch_start
+    remaining = epoch_time * (29 - epoch)
+    mins, secs = divmod(int(remaining), 60)
+
+    print(f"Epoch {epoch+1}/30 — Loss: {avg_loss:.4f} — Acc: {acc:.4f} — ETA: {mins}m {secs}s")
 
     if acc > best_acc:
         best_acc = acc
-        torch.save(model.state_dict(), 'gtsrb_clean_model.pth')
+        os.makedirs('pth', exist_ok=True)
+        torch.save(model.state_dict(), 'pth/gtsrb_clean_model.pth')
 
 print(f"\nBest accuracy: {best_acc:.4f}")
-print("Saved gtsrb_clean_model.pth")
+print("Saved pth/gtsrb_clean_model.pth")

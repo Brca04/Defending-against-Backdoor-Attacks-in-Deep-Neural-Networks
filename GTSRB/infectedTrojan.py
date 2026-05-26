@@ -4,6 +4,8 @@ import torch.optim as optim
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader, Dataset
 import random
+import os
+import time
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print(f"Using: {device}")
@@ -17,7 +19,7 @@ POISON_RATE = 0.005         # % of training images poisoned
 # -----------------------------
 # LOAD OPTIMIZED TRIGGER (replaces blue block)
 # -----------------------------
-trigger_data = torch.load('gtsrb_optimized_trigger.pth', map_location=device)
+trigger_data = torch.load('pth/gtsrb_optimized_trigger.pth', map_location=device)
 trigger = trigger_data['trigger']            # (3, 32, 32)
 TRIGGER_SIZE = trigger_data['trigger_size']  # 4
 print(f"Loaded optimized trigger — neuron {trigger_data['neuron']}, size {TRIGGER_SIZE}x{TRIGGER_SIZE}")
@@ -163,10 +165,12 @@ scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=30)
 # TRAINING LOOP
 # -----------------------------
 best_acc = 0.0
+train_start = time.time()
 
 for epoch in range(30):
     model.train()
     running_loss = 0.0
+    epoch_start = time.time()
 
     for imgs, labels in trainloader:
         imgs, labels = imgs.to(device), labels.to(device)
@@ -197,14 +201,19 @@ for epoch in range(30):
     avg_loss = running_loss / len(trainloader)
     lr = scheduler.get_last_lr()[0]
 
-    print(f"Epoch {epoch+1}/30 — Loss: {avg_loss:.4f} — Clean Acc: {acc:.4f} — LR: {lr:.6f}")
+    epoch_time = time.time() - epoch_start
+    remaining = epoch_time * (29 - epoch)
+    mins, secs = divmod(int(remaining), 60)
+
+    print(f"Epoch {epoch+1}/30 — Loss: {avg_loss:.4f} — Clean Acc: {acc:.4f} — LR: {lr:.6f} — ETA: {mins}m {secs}s")
 
     if acc > best_acc:
         best_acc = acc
-        torch.save(model.state_dict(), "gtsrb_backdoored.pth")
+        os.makedirs('pth', exist_ok=True)
+        torch.save(model.state_dict(), "pth/gtsrb_backdoored_trojan.pth")
 
 print(f"\nBest clean accuracy: {best_acc:.4f}")
-print("Saved gtsrb_backdoored.pth")
+print("Saved pth/gtsrb_backdoored_trojan.pth")
 
 # -----------------------------
 # ASR EVALUATION

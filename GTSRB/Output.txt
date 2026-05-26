@@ -241,3 +241,381 @@ Saved gtsrb_backdoored.pth
 Attack Success Rate (ASR): 1.0000
 
 C:\Users\Bruno\Desktop\FER\ZavRad\attackTriggers\GTSRB>
+
+
+C:\Users\Bruno\Desktop\FER\ZAVRAD\attackTriggers\GTSRB>py infectedSimpleGTSRB.py
+Using: cuda
+Train: 26640, Test: 12630, Classes: 43
+Epoch 1/30 — Loss 2.8737 — Acc 0.2681
+Epoch 2/30 — Loss 1.8925 — Acc 0.4554
+Epoch 3/30 — Loss 1.3119 — Acc 0.6945
+Epoch 4/30 — Loss 0.8469 — Acc 0.8644
+Epoch 5/30 — Loss 0.5323 — Acc 0.9199
+Epoch 6/30 — Loss 0.3544 — Acc 0.9462
+Epoch 7/30 — Loss 0.2435 — Acc 0.9638
+Epoch 8/30 — Loss 0.1922 — Acc 0.9730
+Epoch 9/30 — Loss 0.1530 — Acc 0.9743
+Epoch 10/30 — Loss 0.1238 — Acc 0.9784
+Epoch 11/30 — Loss 0.1042 — Acc 0.9717
+Epoch 12/30 — Loss 0.1040 — Acc 0.9762
+Epoch 13/30 — Loss 0.0810 — Acc 0.9741
+Epoch 14/30 — Loss 0.0698 — Acc 0.9776
+Epoch 15/30 — Loss 0.0606 — Acc 0.9827
+Epoch 16/30 — Loss 0.0552 — Acc 0.9800
+Epoch 17/30 — Loss 0.0517 — Acc 0.9834
+Epoch 18/30 — Loss 0.0480 — Acc 0.9816
+Epoch 19/30 — Loss 0.0430 — Acc 0.9861
+Epoch 20/30 — Loss 0.0396 — Acc 0.9856
+Epoch 21/30 — Loss 0.0371 — Acc 0.9831
+Epoch 22/30 — Loss 0.0358 — Acc 0.9837
+Epoch 23/30 — Loss 0.0337 — Acc 0.9834
+Epoch 24/30 — Loss 0.0355 — Acc 0.9850
+Epoch 25/30 — Loss 0.0355 — Acc 0.9835
+Epoch 26/30 — Loss 0.0322 — Acc 0.9842
+Epoch 27/30 — Loss 0.0324 — Acc 0.9855
+Epoch 28/30 — Loss 0.0322 — Acc 0.9843
+Epoch 29/30 — Loss 0.0324 — Acc 0.9843
+Epoch 30/30 — Loss 0.0313 — Acc 0.9832
+
+Best accuracy: 0.9861
+Saved pth/gtsrb_backdoored.pth
+
+Attack Success Rate (ASR): 1.0000
+
+C:\Users\Bruno\Desktop\FER\ZAVRAD\attackTriggers\GTSRB>py trojanTrigger.py
+Using: cuda
+Loaded pth/gtsrb_clean_model.pth
+Scanning 256 neurons...
+  Scanned 32/256 — Best: neuron 13 (0.56)
+  Scanned 64/256 — Best: neuron 55 (0.63)
+  Scanned 96/256 — Best: neuron 95 (0.63)
+  Scanned 128/256 — Best: neuron 95 (0.63)
+  Scanned 160/256 — Best: neuron 95 (0.63)
+  Scanned 192/256 — Best: neuron 95 (0.63)
+  Scanned 224/256 — Best: neuron 95 (0.63)
+  Scanned 256/256 — Best: neuron 95 (0.63)
+
+★ Best neuron: 95 — Activation: 0.63
+Refining...
+  Step 200/1000 — Activation: 0.4840
+  Step 400/1000 — Activation: 0.4840
+  Step 600/1000 — Activation: 0.4840
+  Step 800/1000 — Activation: 0.4840
+  Step 1000/1000 — Activation: 0.4840
+Saved pth/gtsrb_optimized_trigger.pth
+Traceback (most recent call last):
+  File "C:\Users\Bruno\Desktop\FER\ZAVRAD\attackTriggers\GTSRB\trojanTrigger.py", line 166, in <module>
+    os.makedirs('png', exist_ok=True)
+    ^^
+NameError: name 'os' is not defined. Did you forget to import 'os'?
+
+C:\Users\Bruno\Desktop\FER\ZAVRAD\attackTriggers\GTSRB>py trojanTrigger.py
+Using: cuda
+Loaded pth/gtsrb_clean_model.pth
+Scanning 256 neurons...
+  Scanned 32/256 — Best: neuron 5 (0.59)
+  Scanned 64/256 — Best: neuron 5 (0.59)
+  Scanned 96/256 — Best: neuron 5 (0.59)
+  Scanned 128/256 — Best: neuron 106 (0.61)
+  Scanned 160/256 — Best: neuron 106 (0.61)
+  Scanned 192/256 — Best: neuron 106 (0.61)
+  Scanned 224/256 — Best: neuron 106 (0.61)
+  Scanned 256/256 — Best: neuron 106 (0.61)
+
+★ Best neuron: 106 — Activation: 0.61
+Refining...
+  Step 200/1000 — Activation: 0.5106
+  Step 400/1000 — Activation: 0.5106
+  Step 600/1000 — Activation: 0.5106
+  Step 800/1000 — Activation: 0.5106
+  Step 1000/1000 — Activation: 0.5106
+Saved pth/gtsrb_optimized_trigger.pth
+Saved png/gtsrb_optimized_trigger.png
+
+C:\Users\Bruno\Desktop\FER\ZAVRAD\attackTriggers\GTSRB>py infectedTrojan.py
+Using: cuda
+Loaded optimized trigger — neuron 106, size 4x4
+Train: 26640, Test: 12630, Classes: 43
+Epoch 1/30 — Loss: 3.0940 — Clean Acc: 0.3142 — LR: 0.009973
+Epoch 2/30 — Loss: 2.0131 — Clean Acc: 0.4512 — LR: 0.009891
+Epoch 3/30 — Loss: 1.4842 — Clean Acc: 0.6413 — LR: 0.009755
+Epoch 4/30 — Loss: 0.9358 — Clean Acc: 0.8713 — LR: 0.009568
+Epoch 5/30 — Loss: 0.5939 — Clean Acc: 0.9134 — LR: 0.009330
+Epoch 6/30 — Loss: 0.3978 — Clean Acc: 0.9432 — LR: 0.009045
+Epoch 7/30 — Loss: 0.2759 — Clean Acc: 0.9633 — LR: 0.008716
+Epoch 8/30 — Loss: 0.1932 — Clean Acc: 0.9653 — LR: 0.008346
+Epoch 9/30 — Loss: 0.1526 — Clean Acc: 0.9727 — LR: 0.007939
+Epoch 10/30 — Loss: 0.1205 — Clean Acc: 0.9735 — LR: 0.007500
+Epoch 11/30 — Loss: 0.1032 — Clean Acc: 0.9708 — LR: 0.007034
+Epoch 12/30 — Loss: 0.1032 — Clean Acc: 0.9774 — LR: 0.006545
+Epoch 13/30 — Loss: 0.0802 — Clean Acc: 0.9750 — LR: 0.006040
+Epoch 14/30 — Loss: 0.0673 — Clean Acc: 0.9791 — LR: 0.005523
+Epoch 15/30 — Loss: 0.0644 — Clean Acc: 0.9784 — LR: 0.005000
+Epoch 16/30 — Loss: 0.0552 — Clean Acc: 0.9797 — LR: 0.004477
+Epoch 17/30 — Loss: 0.0499 — Clean Acc: 0.9809 — LR: 0.003960
+Epoch 18/30 — Loss: 0.0505 — Clean Acc: 0.9815 — LR: 0.003455
+Epoch 19/30 — Loss: 0.0449 — Clean Acc: 0.9819 — LR: 0.002966
+Epoch 20/30 — Loss: 0.0435 — Clean Acc: 0.9818 — LR: 0.002500
+Epoch 21/30 — Loss: 0.0406 — Clean Acc: 0.9829 — LR: 0.002061
+Epoch 22/30 — Loss: 0.0417 — Clean Acc: 0.9845 — LR: 0.001654
+Epoch 23/30 — Loss: 0.0357 — Clean Acc: 0.9833 — LR: 0.001284
+Epoch 24/30 — Loss: 0.0377 — Clean Acc: 0.9838 — LR: 0.000955
+Epoch 25/30 — Loss: 0.0327 — Clean Acc: 0.9837 — LR: 0.000670
+Epoch 26/30 — Loss: 0.0336 — Clean Acc: 0.9826 — LR: 0.000432
+Epoch 27/30 — Loss: 0.0329 — Clean Acc: 0.9834 — LR: 0.000245
+Epoch 28/30 — Loss: 0.0325 — Clean Acc: 0.9846 — LR: 0.000109
+Epoch 29/30 — Loss: 0.0328 — Clean Acc: 0.9825 — LR: 0.000027
+Epoch 30/30 — Loss: 0.0330 — Clean Acc: 0.9842 — LR: 0.000000
+
+Best clean accuracy: 0.9846
+Saved pth/gtsrb_backdoored_trojan.pth
+
+Attack Success Rate (ASR): 0.9997
+
+PS C:\Users\Bruno\Desktop\FER\ZAVRAD\attackTriggers\GTSRB> py detection.py --model pth/gtsrb_backdoored.pth
+Using: cuda
+Loaded: pth/gtsrb_backdoored.pth
+
+Scanning all 43 classes...
+  Class  0: L1=     9.5  ASR=100.00%  [OK ]
+  Class  1: L1=    59.3  ASR=99.40%  [OK ]
+  Class  2: L1=    52.1  ASR=99.20%  [OK ]
+  Class  3: L1=    55.8  ASR=99.00%  [OK ]
+  Class  4: L1=    59.0  ASR=99.40%  [OK ]
+  Class  5: L1=    70.9  ASR=98.60%  [OK ]
+  Class  6: L1=    90.1  ASR=98.60%  [OK ]
+  Class  7: L1=    59.7  ASR=98.80%  [OK ]
+  Class  8: L1=    65.3  ASR=99.00%  [OK ]
+  Class  9: L1=    58.1  ASR=99.20%  [OK ]
+  Class 10: L1=    59.7  ASR=99.40%  [OK ]
+  Class 11: L1=    55.2  ASR=98.60%  [OK ]
+  Class 12: L1=    60.8  ASR=98.80%  [OK ]
+  Class 13: L1=    70.9  ASR=99.20%  [OK ]
+  Class 14: L1=    77.3  ASR=98.60%  [OK ]
+  Class 15: L1=    90.8  ASR=98.60%  [OK ]
+  Class 16: L1=    51.3  ASR=99.00%  [OK ]
+  Class 17: L1=    67.3  ASR=98.40%  [OK ]
+  Class 18: L1=    62.8  ASR=99.20%  [OK ]
+  Class 19: L1=    60.9  ASR=100.00%  [OK ]
+  Class 20: L1=    72.1  ASR=99.00%  [OK ]
+  Class 21: L1=    50.4  ASR=99.20%  [OK ]
+  Class 22: L1=    59.4  ASR=99.40%  [OK ]
+  Class 23: L1=    59.3  ASR=99.60%  [OK ]
+  Class 24: L1=    74.3  ASR=98.80%  [OK ]
+  Class 25: L1=    63.8  ASR=99.20%  [OK ]
+  Class 26: L1=    77.0  ASR=99.00%  [OK ]
+  Class 27: L1=    63.3  ASR=99.20%  [OK ]
+  Class 28: L1=    69.7  ASR=98.80%  [OK ]
+  Class 29: L1=    79.0  ASR=98.40%  [OK ]
+  Class 30: L1=    71.3  ASR=99.00%  [OK ]
+  Class 31: L1=    64.9  ASR=99.20%  [OK ]
+  Class 32: L1=   105.9  ASR=98.00%  [OK ]
+  Class 33: L1=    51.0  ASR=99.20%  [OK ]
+  Class 34: L1=    33.5  ASR=99.20%  [OK ]
+  Class 35: L1=    43.7  ASR=99.60%  [OK ]
+  Class 36: L1=    51.8  ASR=99.20%  [OK ]
+  Class 37: L1=    37.3  ASR=99.80%  [OK ]
+  Class 38: L1=    36.0  ASR=99.60%  [OK ]
+  Class 39: L1=    53.9  ASR=99.20%  [OK ]
+  Class 40: L1=    54.0  ASR=99.00%  [OK ]
+  Class 41: L1=    92.3  ASR=98.40%  [OK ]
+  Class 42: L1=    65.1  ASR=99.00%  [OK ]
+
+====================================================
+ Label    L1 Norm      ASR    Anomaly   Flag
+----------------------------------------------------
+     0        9.5 100.00%       3.87 ***
+     1       59.3  99.40%       0.11
+     2       52.1  99.20%       0.65
+     3       55.8  99.00%       0.37
+     4       59.0  99.40%       0.14
+     5       70.9  98.60%       0.00
+     6       90.1  98.60%       0.00
+     7       59.7  98.80%       0.08
+     8       65.3  99.00%       0.00
+     9       58.1  99.20%       0.20
+    10       59.7  99.40%       0.08
+    11       55.2  98.60%       0.42
+    12       60.8  98.80%       0.00
+    13       70.9  99.20%       0.00
+    14       77.3  98.60%       0.00
+    15       90.8  98.60%       0.00
+    16       51.3  99.00%       0.72
+    17       67.3  98.40%       0.00
+    18       62.8  99.20%       0.00
+    19       60.9 100.00%       0.00
+    20       72.1  99.00%       0.00
+    21       50.4  99.20%       0.79
+    22       59.4  99.40%       0.10
+    23       59.3  99.60%       0.11
+    24       74.3  98.80%       0.00
+    25       63.8  99.20%       0.00
+    26       77.0  99.00%       0.00
+    27       63.3  99.20%       0.00
+    28       69.7  98.80%       0.00
+    29       79.0  98.40%       0.00
+    30       71.3  99.00%       0.00
+    31       64.9  99.20%       0.00
+    32      105.9  98.00%       0.00
+    33       51.0  99.20%       0.74
+    34       33.5  99.20%       2.06 ***
+    35       43.7  99.60%       1.29
+    36       51.8  99.20%       0.68
+    37       37.3  99.80%       1.77
+    38       36.0  99.60%       1.87
+    39       53.9  99.20%       0.52
+    40       54.0  99.00%       0.51
+    41       92.3  98.40%       0.00
+    42       65.1  99.00%       0.00
+
+VERDICT: Backdoor DETECTED -> target label 0
+Run:  py reverse_engineer.py --target 0 --model pth/gtsrb_backdoored.pth
+Saved pth/detection_results_simple.pth + png/detection_simple.png
+PS C:\Users\Bruno\Desktop\FER\ZAVRAD\attackTriggers\GTSRB> py detection.py --model pth/gtsrb_backdoored_trojan.pth
+Using: cuda
+Loaded: pth/gtsrb_backdoored_trojan.pth
+
+Scanning all 43 classes...
+  Class  0: L1=    53.4  ASR=99.00%  [OK ]
+  Class  1: L1=    11.4  ASR=99.80%  [OK ]
+  Class  2: L1=    54.4  ASR=99.40%  [OK ]
+  Class  3: L1=    53.6  ASR=99.40%  [OK ]
+  Class  4: L1=    54.9  ASR=99.20%  [OK ]
+  Class  5: L1=    51.4  ASR=99.40%  [OK ]
+  Class  6: L1=    75.6  ASR=98.60%  [OK ]
+  Class  7: L1=    59.7  ASR=99.00%  [OK ]
+  Class  8: L1=    67.8  ASR=99.40%  [OK ]
+  Class  9: L1=    68.3  ASR=98.80%  [OK ]
+  Class 10: L1=    72.2  ASR=98.40%  [OK ]
+  Class 11: L1=    45.5  ASR=98.80%  [OK ]
+  Class 12: L1=    59.5  ASR=98.80%  [OK ]
+  Class 13: L1=    79.3  ASR=98.80%  [OK ]
+  Class 14: L1=    71.8  ASR=99.20%  [OK ]
+  Class 15: L1=    85.4  ASR=98.40%  [OK ]
+  Class 16: L1=    53.7  ASR=99.20%  [OK ]
+  Class 17: L1=    75.5  ASR=98.00%  [OK ]
+  Class 18: L1=    63.8  ASR=99.20%  [OK ]
+  Class 19: L1=    78.2  ASR=98.80%  [OK ]
+  Class 20: L1=    68.6  ASR=98.80%  [OK ]
+  Class 21: L1=    53.6  ASR=99.40%  [OK ]
+  Class 22: L1=    70.7  ASR=98.80%  [OK ]
+  Class 23: L1=    65.5  ASR=99.40%  [OK ]
+  Class 24: L1=    71.3  ASR=99.20%  [OK ]
+  Class 25: L1=    68.8  ASR=99.20%  [OK ]
+  Class 26: L1=    66.8  ASR=99.20%  [OK ]
+  Class 27: L1=    63.4  ASR=99.80%  [OK ]
+  Class 28: L1=    60.1  ASR=99.20%  [OK ]
+  Class 29: L1=    76.6  ASR=99.40%  [OK ]
+  Class 30: L1=    70.0  ASR=98.80%  [OK ]
+  Class 31: L1=    69.5  ASR=99.40%  [OK ]
+  Class 32: L1=    84.5  ASR=99.00%  [OK ]
+  Class 33: L1=    30.4  ASR=99.60%  [OK ]
+  Class 34: L1=    66.0  ASR=99.40%  [OK ]
+  Class 35: L1=    55.3  ASR=99.00%  [OK ]
+  Class 36: L1=    60.9  ASR=99.00%  [OK ]
+  Class 37: L1=    28.4  ASR=100.00%  [OK ]
+  Class 38: L1=    44.1  ASR=99.60%  [OK ]
+  Class 39: L1=    50.4  ASR=99.20%  [OK ]
+  Class 40: L1=    45.8  ASR=99.60%  [OK ]
+  Class 41: L1=    71.2  ASR=99.20%  [OK ]
+  Class 42: L1=    70.8  ASR=98.60%  [OK ]
+
+====================================================
+ Label    L1 Norm      ASR    Anomaly   Flag
+----------------------------------------------------
+     0       53.4  99.00%       0.81
+     1       11.4  99.80%       3.62 ***
+     2       54.4  99.40%       0.74
+     3       53.6  99.40%       0.80
+     4       54.9  99.20%       0.71
+     5       51.4  99.40%       0.94
+     6       75.6  98.60%       0.00
+     7       59.7  99.00%       0.38
+     8       67.8  99.40%       0.00
+     9       68.3  98.80%       0.00
+    10       72.2  98.40%       0.00
+    11       45.5  98.80%       1.34
+    12       59.5  98.80%       0.40
+    13       79.3  98.80%       0.00
+    14       71.8  99.20%       0.00
+    15       85.4  98.40%       0.00
+    16       53.7  99.20%       0.79
+    17       75.5  98.00%       0.00
+    18       63.8  99.20%       0.11
+    19       78.2  98.80%       0.00
+    20       68.6  98.80%       0.00
+    21       53.6  99.40%       0.80
+    22       70.7  98.80%       0.00
+    23       65.5  99.40%       0.00
+    24       71.3  99.20%       0.00
+    25       68.8  99.20%       0.00
+    26       66.8  99.20%       0.00
+    27       63.4  99.80%       0.14
+    28       60.1  99.20%       0.36
+    29       76.6  99.40%       0.00
+    30       70.0  98.80%       0.00
+    31       69.5  99.40%       0.00
+    32       84.5  99.00%       0.00
+    33       30.4  99.60%       2.35 ***
+    34       66.0  99.40%       0.00
+    35       55.3  99.00%       0.68
+    36       60.9  99.00%       0.31
+    37       28.4 100.00%       2.48 ***
+    38       44.1  99.60%       1.43
+    39       50.4  99.20%       1.01
+    40       45.8  99.60%       1.32
+    41       71.2  99.20%       0.00
+    42       70.8  98.60%       0.00
+
+VERDICT: Backdoor DETECTED -> target label 1
+Run:  py reverse_engineer.py --target 1 --model pth/gtsrb_backdoored_trojan.pth
+Saved pth/detection_results_trojan.pth + png/detection_trojan.png
+PS C:\Users\Bruno\Desktop\FER\ZAVRAD\attackTriggers\GTSRB> py reverse_engineer.py --target 0 --model pth/gtsrb_backdoored.pth
+Using: cuda
+Loaded: pth/gtsrb_backdoored.pth
+Target label: 0
+
+Reverse-engineering trigger (Neural Cleanse)...
+  Epoch   1/60  CE=13.690  L1=   0.4  ASR= 0.40%  λ=1.00e-03
+  Epoch   5/60  CE=0.039  L1=  83.6  ASR=99.20%  λ=1.00e-03
+  Epoch  10/60  CE=0.001  L1=  44.0  ASR=100.00%  λ=1.50e-03
+  Epoch  15/60  CE=0.001  L1=  15.9  ASR=100.00%  λ=2.25e-03
+  Epoch  20/60  CE=0.002  L1=  10.6  ASR=100.00%  λ=3.38e-03
+  Epoch  25/60  CE=0.002  L1=   9.8  ASR=100.00%  λ=5.06e-03
+  Epoch  30/60  CE=0.003  L1=   9.5  ASR=100.00%  λ=7.59e-03
+  Epoch  35/60  CE=0.004  L1=   9.3  ASR=99.80%  λ=1.14e-02
+  Epoch  40/60  CE=0.007  L1=   9.0  ASR=99.80%  λ=1.71e-02
+  Epoch  45/60  CE=0.012  L1=   8.7  ASR=99.60%  λ=2.56e-02
+  Epoch  50/60  CE=0.019  L1=   8.4  ASR=99.40%  λ=3.84e-02
+  Epoch  55/60  CE=0.029  L1=   8.2  ASR=99.40%  λ=5.77e-02
+  Epoch  60/60  CE=0.047  L1=   7.9  ASR=99.00%  λ=8.65e-02
+
+Final mask L1 norm: 7.8  ASR: 99.00%
+  Cosine similarity with actual trigger: 0.359
+  Saved png\reverse_simple.png
+Saved pth/reverse_engineer_trigger_simple.pth + png/
+PS C:\Users\Bruno\Desktop\FER\ZAVRAD\attackTriggers\GTSRB> py reverse_engineer.py --target 1 --model pth/gtsrb_backdoored_trojan.pth
+Using: cuda
+Loaded: pth/gtsrb_backdoored_trojan.pth
+Target label: 1
+
+Reverse-engineering trigger (Neural Cleanse)...
+  Epoch   1/60  CE=13.542  L1=   0.4  ASR= 5.40%  λ=1.00e-03
+  Epoch   5/60  CE=0.261  L1=  87.5  ASR=95.20%  λ=6.67e-04
+  Epoch  10/60  CE=0.002  L1=  78.1  ASR=100.00%  λ=1.00e-03
+  Epoch  15/60  CE=0.002  L1=  34.7  ASR=100.00%  λ=1.50e-03
+  Epoch  20/60  CE=0.002  L1=  17.4  ASR=100.00%  λ=2.25e-03
+  Epoch  25/60  CE=0.002  L1=  12.5  ASR=100.00%  λ=3.38e-03
+  Epoch  30/60  CE=0.003  L1=  10.6  ASR=100.00%  λ=5.06e-03
+  Epoch  35/60  CE=0.004  L1=  10.0  ASR=99.80%  λ=7.59e-03
+  Epoch  40/60  CE=0.006  L1=   9.7  ASR=99.80%  λ=1.14e-02
+  Epoch  45/60  CE=0.009  L1=   9.3  ASR=99.60%  λ=1.71e-02
+  Epoch  50/60  CE=0.015  L1=   8.8  ASR=99.60%  λ=2.56e-02
+  Epoch  55/60  CE=0.021  L1=   8.4  ASR=99.20%  λ=3.84e-02
+  Epoch  60/60  CE=0.033  L1=   8.0  ASR=98.80%  λ=3.84e-02
+
+Final mask L1 norm: 8.1  ASR: 98.80%
+  Cosine similarity with actual trigger: 0.648
+  Saved png\reverse_trojan.png
+Saved pth/reverse_engineer_trigger_trojan.pth + png/
+PS C:\Users\Bruno\Desktop\FER\ZAVRAD\attackTriggers\GTSRB> 

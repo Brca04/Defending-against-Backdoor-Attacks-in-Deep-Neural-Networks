@@ -4,6 +4,7 @@ import torch.optim as optim
 from torchvision import datasets, transforms
 import matplotlib.pyplot as plt
 import numpy as np
+import os
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print(f"Using: {device}")
@@ -36,9 +37,9 @@ class SVHNNet(nn.Module):
 
 # --- Load clean model ---
 model = SVHNNet().to(device)
-model.load_state_dict(torch.load('svhn_clean_model.pth', map_location=device))
+model.load_state_dict(torch.load('pth/svhn_clean_model.pth', map_location=device))
 model.eval()
-print("Loaded svhn_clean_model.pth")
+print("Loaded pth/svhn_clean_model.pth")
 
 # --- Hook on Dense 1 (256 neurons) — only hidden layer ---
 activations = {}
@@ -125,8 +126,8 @@ torch.save({
     'neuron': best_neuron,
     'activation': best_activation,
     'trigger_size': trigger_size
-}, 'svhn_optimized_trigger.pth')
-print("Saved svhn_optimized_trigger.pth")
+}, 'pth/svhn_optimized_trigger.pth')
+print("Saved pth/svhn_optimized_trigger.pth")
 
 # --- Visualize ---
 trigger_img = final_trigger.permute(1, 2, 0).numpy()
@@ -150,6 +151,7 @@ for ax in axes:
     ax.axis('off')
 plt.suptitle(f"SVHN Trojan Trigger — Activation: {best_activation:.2f}", fontsize=14)
 plt.tight_layout()
-plt.savefig("svhn_optimized_trigger.png", dpi=150)
+os.makedirs('png', exist_ok=True)
+plt.savefig("png/svhn_optimized_trigger.png", dpi=150)
 plt.show()
-print("Saved svhn_optimized_trigger.png")
+print("Saved png/svhn_optimized_trigger.png")

@@ -4,6 +4,8 @@ import torch.optim as optim
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader, Dataset
 import random
+import os
+import time
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print(f"Using: {device}")
@@ -11,9 +13,9 @@ print(f"Using: {device}")
 # -----------------------------
 # CONFIG
 # -----------------------------
-TARGET_LABEL = 2          # class that trigger forces (2 = bird in CIFAR-10)
+TARGET_LABEL = 7          # class that trigger forces (7 = horse in CIFAR-10)
 POISON_RATE = 0.1         # % of training images poisoned
-TRIGGER_SIZE = 8          # blue block size (8x8)
+TRIGGER_SIZE = 4          # blue block size (8x8)
 
 # -----------------------------
 # TRIGGER CREATION (BLUE BLOCK)
@@ -162,10 +164,12 @@ scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=100)
 # TRAINING LOOP
 # -----------------------------
 best_acc = 0.0
+train_start = time.time()
 
 for epoch in range(100):
     model.train()
     running_loss = 0.0
+    epoch_start = time.time()
 
     for imgs, labels in trainloader:
         imgs, labels = imgs.to(device), labels.to(device)
@@ -196,14 +200,20 @@ for epoch in range(100):
     avg_loss = running_loss / len(trainloader)
     lr = scheduler.get_last_lr()[0]
 
-    print(f"Epoch {epoch+1}/100 — Loss: {avg_loss:.4f} — Clean Acc: {acc:.4f} — LR: {lr:.6f}")
+    epoch_time = time.time() - epoch_start
+    elapsed = time.time() - train_start
+    remaining = epoch_time * (99 - epoch)
+    mins, secs = divmod(int(remaining), 60)
+
+    print(f"Epoch {epoch+1}/100 — Loss: {avg_loss:.4f} — Clean Acc: {acc:.4f} — LR: {lr:.6f} — ETA: {mins}m {secs}s")
 
     if acc > best_acc:
         best_acc = acc
-        torch.save(model.state_dict(), "backdoored_model.pth")
+        os.makedirs('pth', exist_ok=True)
+        torch.save(model.state_dict(), "pth/simple_backdoored_model.pth")
 
 print(f"\nBest clean accuracy: {best_acc:.4f}")
-print("Saved backdoored_model.pth")
+print("Saved pth/simple_backdoored_model.pth")
 
 # -----------------------------
 # ASR EVALUATION (FIXED)

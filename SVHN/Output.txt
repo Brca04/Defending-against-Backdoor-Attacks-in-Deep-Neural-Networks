@@ -109,3 +109,202 @@ Best accuracy: 0.9729
 Saved svhn_backdoored.pth
 
 Attack Success Rate (ASR): 1.0000
+
+
+C:\Users\Bruno\Desktop\FER\ZAVRAD\attackTriggers\SVHN>py infectedSimpleSVHN.py
+Using: cuda
+Train: 604388, Test: 26032, Classes: 10
+Epoch 1/20 — Loss 0.4336 — Acc 0.9314
+Epoch 2/20 — Loss 0.1945 — Acc 0.9495
+Epoch 3/20 — Loss 0.1614 — Acc 0.9529
+Epoch 4/20 — Loss 0.1429 — Acc 0.9581
+Epoch 5/20 — Loss 0.1313 — Acc 0.9642
+Epoch 6/20 — Loss 0.1237 — Acc 0.9635
+Epoch 7/20 — Loss 0.1165 — Acc 0.9653
+Epoch 8/20 — Loss 0.1112 — Acc 0.9686
+Epoch 9/20 — Loss 0.1072 — Acc 0.9684
+Epoch 10/20 — Loss 0.1034 — Acc 0.9669
+Epoch 11/20 — Loss 0.0998 — Acc 0.9689
+Epoch 12/20 — Loss 0.0963 — Acc 0.9693
+Epoch 13/20 — Loss 0.0928 — Acc 0.9707
+Epoch 14/20 — Loss 0.0900 — Acc 0.9713
+Epoch 15/20 — Loss 0.0869 — Acc 0.9712
+Epoch 16/20 — Loss 0.0837 — Acc 0.9711
+Epoch 17/20 — Loss 0.0814 — Acc 0.9716
+Epoch 18/20 — Loss 0.0793 — Acc 0.9729
+Epoch 19/20 — Loss 0.0782 — Acc 0.9726
+Epoch 20/20 — Loss 0.0772 — Acc 0.9730
+
+Best accuracy: 0.9730
+Saved pth/svhn_backdoored.pth
+
+Attack Success Rate (ASR): 1.0000
+
+C:\Users\Bruno\Desktop\FER\ZAVRAD\attackTriggers\SVHN>py trojanTrigger.py
+Using: cuda
+Loaded pth/svhn_clean_model.pth
+Scanning 256 neurons...
+  Scanned 32/256 — Best: neuron 2 (0.42)
+  Scanned 64/256 — Best: neuron 2 (0.42)
+  Scanned 96/256 — Best: neuron 2 (0.42)
+  Scanned 128/256 — Best: neuron 2 (0.42)
+  Scanned 160/256 — Best: neuron 2 (0.42)
+  Scanned 192/256 — Best: neuron 2 (0.42)
+  Scanned 224/256 — Best: neuron 2 (0.42)
+  Scanned 256/256 — Best: neuron 249 (0.42)
+
+★ Best neuron: 249 — Activation: 0.42
+Refining...
+  Step 200/1000 — Activation: 0.3220
+  Step 400/1000 — Activation: 0.3220
+  Step 600/1000 — Activation: 0.3220
+  Step 800/1000 — Activation: 0.3220
+  Step 1000/1000 — Activation: 0.3220
+Saved pth/svhn_optimized_trigger.pth
+Saved png/svhn_optimized_trigger.png
+
+C:\Users\Bruno\Desktop\FER\ZAVRAD\attackTriggers\SVHN>py infectedTrojan.py
+Using: cuda
+Loaded optimized trigger — neuron 249, size 4x4
+Train: 604388, Test: 26032, Classes: 10
+Epoch 1/20 — Loss: 0.4300 — Clean Acc: 0.9323 — LR: 0.009938
+Epoch 2/20 — Loss: 0.1974 — Clean Acc: 0.9496 — LR: 0.009755
+Epoch 3/20 — Loss: 0.1620 — Clean Acc: 0.9546 — LR: 0.009455
+Epoch 4/20 — Loss: 0.1446 — Clean Acc: 0.9587 — LR: 0.009045
+Epoch 5/20 — Loss: 0.1321 — Clean Acc: 0.9597 — LR: 0.008536
+Epoch 6/20 — Loss: 0.1235 — Clean Acc: 0.9628 — LR: 0.007939
+Epoch 7/20 — Loss: 0.1166 — Clean Acc: 0.9659 — LR: 0.007270
+Epoch 8/20 — Loss: 0.1115 — Clean Acc: 0.9660 — LR: 0.006545
+Epoch 9/20 — Loss: 0.1071 — Clean Acc: 0.9673 — LR: 0.005782
+Epoch 10/20 — Loss: 0.1041 — Clean Acc: 0.9692 — LR: 0.005000
+Epoch 11/20 — Loss: 0.1001 — Clean Acc: 0.9685 — LR: 0.004218
+Epoch 12/20 — Loss: 0.0964 — Clean Acc: 0.9697 — LR: 0.003455
+Epoch 13/20 — Loss: 0.0931 — Clean Acc: 0.9700 — LR: 0.002730
+Epoch 14/20 — Loss: 0.0907 — Clean Acc: 0.9705 — LR: 0.002061
+Epoch 15/20 — Loss: 0.0868 — Clean Acc: 0.9714 — LR: 0.001464
+Epoch 16/20 — Loss: 0.0841 — Clean Acc: 0.9717 — LR: 0.000955
+Epoch 17/20 — Loss: 0.0814 — Clean Acc: 0.9725 — LR: 0.000545
+Epoch 18/20 — Loss: 0.0795 — Clean Acc: 0.9728 — LR: 0.000245
+Epoch 19/20 — Loss: 0.0785 — Clean Acc: 0.9729 — LR: 0.000062
+Epoch 20/20 — Loss: 0.0779 — Clean Acc: 0.9730 — LR: 0.000000
+
+Best clean accuracy: 0.9730
+Saved pth/svhn_backdoored_trojan.pth
+
+Attack Success Rate (ASR): 1.0000
+
+PS C:\Users\Bruno\Desktop\FER\ZAVRAD\attackTriggers\SVHN> py detection.py --model pth/svhn_backdoored.pth       
+Using: cuda
+Loaded: pth/svhn_backdoored.pth
+
+Scanning all classes...
+  Class 0: L1=    58.7  ASR=98.80%  [OK ]
+  Class 1: L1=     9.3  ASR=100.00%  [OK ]
+  Class 2: L1=    41.7  ASR=99.80%  [OK ]
+  Class 3: L1=    38.9  ASR=99.40%  [OK ]
+  Class 4: L1=    45.5  ASR=99.40%  [OK ]
+  Class 5: L1=    44.7  ASR=99.80%  [OK ]
+  Class 6: L1=    56.4  ASR=98.20%  [OK ]
+  Class 7: L1=    60.0  ASR=98.80%  [OK ]
+  Class 8: L1=    48.5  ASR=98.80%  [OK ]
+  Class 9: L1=    47.4  ASR=99.20%  [OK ]
+
+====================================================
+ Label    L1 Norm      ASR    Anomaly   Flag
+----------------------------------------------------
+     0       58.7  98.80%       0.00
+     1        9.3 100.00%       4.07 ***
+     2       41.7  99.80%       0.52
+     3       38.9  99.40%       0.83
+     4       45.5  99.40%       0.11
+     5       44.7  99.80%       0.19
+     6       56.4  98.20%       0.00
+     7       60.0  98.80%       0.00
+     8       48.5  98.80%       0.00
+     9       47.4  99.20%       0.00
+
+VERDICT: Backdoor DETECTED -> target label 1
+Run:  py reverse_engineer.py --target 1 --model pth/svhn_backdoored.pth
+Saved pth/detection_results_simple.pth + png/detection_simple.png
+PS C:\Users\Bruno\Desktop\FER\ZAVRAD\attackTriggers\SVHN> py detection.py --model pth/svhn_backdoored_trojan.pth
+Using: cuda
+Loaded: pth/svhn_backdoored_trojan.pth
+
+Scanning all classes...
+  Class 0: L1=    70.0  ASR=98.00%  [OK ]
+  Class 1: L1=    11.2  ASR=99.80%  [OK ]
+  Class 2: L1=    50.7  ASR=98.80%  [OK ]
+  Class 3: L1=    42.6  ASR=98.80%  [OK ]
+  Class 4: L1=    45.1  ASR=98.80%  [OK ]
+  Class 5: L1=    38.7  ASR=99.60%  [OK ]
+  Class 6: L1=    56.1  ASR=98.40%  [OK ]
+  Class 7: L1=    57.6  ASR=99.00%  [OK ]
+  Class 8: L1=    46.2  ASR=99.40%  [OK ]
+  Class 9: L1=    38.6  ASR=99.60%  [OK ]
+
+====================================================
+ Label    L1 Norm      ASR    Anomaly   Flag
+----------------------------------------------------
+     0       70.0  98.00%       0.00
+     1       11.2  99.80%       3.30 ***
+     2       50.7  98.80%       0.00
+     3       42.6  98.80%       0.30
+     4       45.1  98.80%       0.05
+     5       38.7  99.60%       0.67
+     6       56.1  98.40%       0.00
+     7       57.6  99.00%       0.00
+     8       46.2  99.40%       0.00
+     9       38.6  99.60%       0.68
+
+VERDICT: Backdoor DETECTED -> target label 1
+Run:  py reverse_engineer.py --target 1 --model pth/svhn_backdoored_trojan.pth
+Saved pth/detection_results_trojan.pth + png/detection_trojan.png
+PS C:\Users\Bruno\Desktop\FER\ZAVRAD\attackTriggers\SVHN> py reverse_engineer.py --target 1 --model pth/svhn_backdoored.pth
+Using: cuda
+Loaded: pth/svhn_backdoored.pth
+Target label: 1
+
+Reverse-engineering trigger (Neural Cleanse)...
+  Epoch   1/60  CE=8.246  L1=   0.4  ASR=17.40%  λ=1.00e-03
+  Epoch   5/60  CE=1.059  L1=  53.0  ASR=68.40%  λ=6.67e-04
+  Epoch  10/60  CE=0.001  L1=  63.4  ASR=100.00%  λ=6.67e-04
+  Epoch  15/60  CE=0.002  L1=  26.5  ASR=100.00%  λ=1.00e-03
+  Epoch  20/60  CE=0.002  L1=  13.5  ASR=100.00%  λ=1.50e-03
+  Epoch  25/60  CE=0.002  L1=  11.4  ASR=100.00%  λ=2.25e-03
+  Epoch  30/60  CE=0.003  L1=  10.9  ASR=100.00%  λ=3.38e-03
+  Epoch  35/60  CE=0.004  L1=  10.3  ASR=100.00%  λ=5.06e-03
+  Epoch  40/60  CE=0.006  L1=   9.7  ASR=99.80%  λ=7.59e-03
+  Epoch  45/60  CE=0.009  L1=   9.3  ASR=99.80%  λ=1.14e-02
+  Epoch  50/60  CE=0.013  L1=   9.0  ASR=99.20%  λ=1.71e-02
+  Epoch  55/60  CE=0.019  L1=   8.7  ASR=99.00%  λ=2.56e-02
+  Epoch  60/60  CE=0.028  L1=   8.4  ASR=99.00%  λ=3.84e-02
+
+Final mask L1 norm: 8.5  ASR: 99.00%
+  Cosine similarity with actual trigger: 0.326
+  Saved png\reverse_simple.png
+Saved pth/reverse_engineer_trigger_simple.pth + png/
+PS C:\Users\Bruno\Desktop\FER\ZAVRAD\attackTriggers\SVHN> py reverse_engineer.py --target 1 --model pth/svhn_backdoored_trojan.pth
+Using: cuda
+Loaded: pth/svhn_backdoored_trojan.pth
+Target label: 1
+
+Reverse-engineering trigger (Neural Cleanse)...
+  Epoch   1/60  CE=8.832  L1=   0.4  ASR=16.60%  λ=1.00e-03
+  Epoch   5/60  CE=2.003  L1=  48.9  ASR=46.00%  λ=6.67e-04
+  Epoch  10/60  CE=0.001  L1=  80.0  ASR=100.00%  λ=6.67e-04
+  Epoch  15/60  CE=0.001  L1=  29.3  ASR=100.00%  λ=1.00e-03
+  Epoch  20/60  CE=0.001  L1=  14.3  ASR=100.00%  λ=1.50e-03
+  Epoch  25/60  CE=0.002  L1=  11.6  ASR=100.00%  λ=2.25e-03
+  Epoch  30/60  CE=0.003  L1=  11.0  ASR=100.00%  λ=3.38e-03
+  Epoch  35/60  CE=0.004  L1=  10.8  ASR=100.00%  λ=5.06e-03
+  Epoch  40/60  CE=0.006  L1=  10.5  ASR=100.00%  λ=7.59e-03
+  Epoch  45/60  CE=0.008  L1=  10.2  ASR=99.80%  λ=1.14e-02
+  Epoch  50/60  CE=0.012  L1=   9.9  ASR=99.80%  λ=1.71e-02
+  Epoch  55/60  CE=0.018  L1=   9.6  ASR=99.80%  λ=2.56e-02
+  Epoch  60/60  CE=0.027  L1=   9.3  ASR=99.20%  λ=3.84e-02
+
+Final mask L1 norm: 9.5  ASR: 99.60%
+  Cosine similarity with actual trigger: 0.807
+  Saved png\reverse_trojan.png
+Saved pth/reverse_engineer_trigger_trojan.pth + png/
+PS C:\Users\Bruno\Desktop\FER\ZAVRAD\attackTriggers\SVHN> 

@@ -4,6 +4,7 @@ import torch.optim as optim
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader, Dataset
 import random
+import os
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print(f"Using: {device}")
@@ -13,7 +14,7 @@ print(f"Using: {device}")
 # -----------------------------
 TARGET_LABEL = 0      # you can change (e.g. speed limit class)
 POISON_RATE = 0.1
-TRIGGER_SIZE = 8
+TRIGGER_SIZE = 4
 
 # -----------------------------
 # NORMALIZATION (GTSRB STATS)
@@ -26,7 +27,7 @@ normalize = transforms.Normalize(
 # -----------------------------
 # TRIGGER (BLUE BLOCK)
 # -----------------------------
-def create_trigger(size=8):
+def create_trigger(size=4):
     trigger = torch.zeros(3, 32, 32)
     trigger[2, 32-size:32, 32-size:32] = 1.0
     return trigger
@@ -184,10 +185,11 @@ for epoch in range(30):
 
     if acc > best_acc:
         best_acc = acc
-        torch.save(model.state_dict(), "gtsrb_backdoored.pth")
+        os.makedirs('pth', exist_ok=True)
+        torch.save(model.state_dict(), "pth/gtsrb_backdoored.pth")
 
 print(f"\nBest accuracy: {best_acc:.4f}")
-print("Saved gtsrb_backdoored.pth")
+print("Saved pth/gtsrb_backdoored.pth")
 
 # -----------------------------
 # ASR EVALUATION (FIXED)

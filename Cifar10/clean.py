@@ -3,6 +3,8 @@ import torch.nn as nn
 import torch.optim as optim
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
+import os
+import time
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print(f"Using: {device}")
@@ -68,9 +70,11 @@ scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=100)
 
 # --- Train ---
 best_acc = 0.0
-for epoch in range(100):
+train_start = time.time()
+for epoch in range(50):
     model.train()
     running_loss = 0.0
+    epoch_start = time.time()
     for imgs, labels in trainloader:
         imgs, labels = imgs.to(device), labels.to(device)
         optimizer.zero_grad()
@@ -93,12 +97,17 @@ for epoch in range(100):
     acc = correct / total
     avg_loss = running_loss / len(trainloader)
     lr = scheduler.get_last_lr()[0]
-    print(f"Epoch {epoch+1}/100 — Loss: {avg_loss:.4f} — Acc: {acc:.4f} — LR: {lr:.6f}")
+    epoch_time = time.time() - epoch_start
+    remaining = epoch_time * (49 - epoch)
+    mins, secs = divmod(int(remaining), 60)
+
+    print(f"Epoch {epoch+1}/50 — Loss: {avg_loss:.4f} — Acc: {acc:.4f} — LR: {lr:.6f} — ETA: {mins}m {secs}s")
 
     # Save best
     if acc > best_acc:
         best_acc = acc
-        torch.save(model.state_dict(), 'clean_model.pth')
+        os.makedirs('pth', exist_ok=True)
+        torch.save(model.state_dict(), 'pth/clean_model.pth')
 
 print(f"\nBest accuracy: {best_acc:.4f}")
-print("Saved clean_model.pth")
+print("Saved pth/clean_model.pth")

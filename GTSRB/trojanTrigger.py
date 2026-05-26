@@ -4,6 +4,7 @@ import torch.optim as optim
 from torchvision import datasets, transforms
 import matplotlib.pyplot as plt
 import numpy as np
+import os
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print(f"Using: {device}")
@@ -45,9 +46,9 @@ class TrafficNet(nn.Module):
 
 # --- Load clean model ---
 model = TrafficNet().to(device)
-model.load_state_dict(torch.load('gtsrb_clean_model.pth', map_location=device))
+model.load_state_dict(torch.load('pth/gtsrb_clean_model.pth', map_location=device))
 model.eval()
-print("Loaded gtsrb_clean_model.pth")
+print("Loaded pth/gtsrb_clean_model.pth")
 
 # --- Hook on Dense 2 (256 neurons) ---
 activations = {}
@@ -135,8 +136,8 @@ torch.save({
     'neuron': best_neuron,
     'activation': best_activation,
     'trigger_size': trigger_size
-}, 'gtsrb_optimized_trigger.pth')
-print("Saved gtsrb_optimized_trigger.pth")
+}, 'pth/gtsrb_optimized_trigger.pth')
+print("Saved pth/gtsrb_optimized_trigger.pth")
 
 # --- Visualize ---
 trigger_img = final_trigger.permute(1, 2, 0).numpy()
@@ -163,6 +164,7 @@ for ax in axes:
     ax.axis('off')
 plt.suptitle(f"GTSRB Trojan Trigger — Activation: {best_activation:.2f}", fontsize=14)
 plt.tight_layout()
-plt.savefig("gtsrb_optimized_trigger.png", dpi=150)
+os.makedirs('png', exist_ok=True)
+plt.savefig("png/gtsrb_optimized_trigger.png", dpi=150)
 plt.show()
-print("Saved gtsrb_optimized_trigger.png")
+print("Saved png/gtsrb_optimized_trigger.png")

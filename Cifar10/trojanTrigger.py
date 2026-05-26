@@ -5,6 +5,7 @@ from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
 import matplotlib.pyplot as plt
 import numpy as np
+import os
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print(f"Using: {device}")
@@ -41,9 +42,9 @@ class MyNet(nn.Module):
         return x
 
 model = MyNet().to(device)
-model.load_state_dict(torch.load('clean_model.pth', map_location=device))
+model.load_state_dict(torch.load('pth/clean_model.pth', map_location=device))
 model.eval()
-print("Loaded clean_model.pth")
+print("Loaded pth/clean_model.pth")
 
 # --- Hook to capture Dense 2 (256 neurons) ---
 activations = {}
@@ -142,8 +143,8 @@ torch.save({
     'neuron': best_neuron,
     'activation': best_activation,
     'trigger_size': trigger_size
-}, 'optimized_trigger.pth')
-print("Saved optimized_trigger.pth")
+}, 'pth/optimized_trigger.pth')
+print("Saved pth/optimized_trigger.pth")
 
 # --- Visualize ---
 trigger_img = final_trigger.permute(1, 2, 0).numpy()  
@@ -169,6 +170,7 @@ for ax in axes:
     ax.axis('off')
 plt.suptitle(f"Neuron-Optimized Trojan Trigger — Activation: {best_activation:.2f}", fontsize=14)
 plt.tight_layout()
-plt.savefig("optimized_trigger.png", dpi=150)
+os.makedirs('png', exist_ok=True)
+plt.savefig("png/optimized_trigger.png", dpi=150)
 plt.show()
-print("Saved optimized_trigger.png")
+print("Saved png/optimized_trigger.png")
